@@ -1,13 +1,13 @@
 export CUDA_DEVICE_ORDER=PCI_BUS_ID
 export CUDA_VISIBLE_DEVICES=0,1
 
-cd src
+cd ../src
 # train
 python main.py \
     ddd \
     --exp_id centerfusion \
     --shuffle_train \
-    --train_split train \
+    --train_split mini_train \
     --val_split mini_val \
     --val_intervals 1 \
     --run_dataset_eval \
@@ -18,7 +18,7 @@ python main.py \
     --num_epochs 60 \
     --lr_step 50 \
     --save_point 20,40,50 \
-    --gpus 0,1 \
+    --gpus 0 \
     --not_rand_crop \
     --flip 0.5 \
     --shift 0.1 \

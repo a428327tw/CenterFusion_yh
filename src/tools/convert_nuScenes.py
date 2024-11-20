@@ -22,14 +22,14 @@ from utils.pointcloud import RadarPointCloudWithVelocity as RadarPointCloud
 from nuScenes_lib.utils_radar import map_pointcloud_to_image
 import time
 
-DATA_PATH = '../../data/nuscenes/'
-OUT_PATH = DATA_PATH + 'annotations'
+DATA_PATH = r"C:/Users/USER/Desktop/bear/Thesis/code/Centerfusion/CenterFusion/data/nuscenes"
+OUT_PATH = DATA_PATH + '/annotations'
 SPLITS = {
           'mini_val': 'v1.0-mini',
           'mini_train': 'v1.0-mini',
-          'train': 'v1.0-trainval',
-          'val': 'v1.0-trainval',
-          'test': 'v1.0-test',
+          #'train': 'v1.0-trainval',
+          #'val': 'v1.0-trainval',
+          #'test': 'v1.0-test',
           }
 
 DEBUG = False
@@ -53,7 +53,7 @@ RADARS_FOR_CAMERA = {
   'CAM_BACK_LEFT':   ["RADAR_BACK_LEFT", "RADAR_FRONT_LEFT"],
   'CAM_BACK_RIGHT':  ["RADAR_BACK_RIGHT", "RADAR_FRONT_RIGHT"],
   'CAM_BACK':        ["RADAR_BACK_RIGHT","RADAR_BACK_LEFT"]}
-NUM_SWEEPS = 6
+NUM_SWEEPS = 3
 
 suffix1 = '_{}sweeps'.format(NUM_SWEEPS) if NUM_SWEEPS > 1 else ''
 OUT_PATH = OUT_PATH + suffix1 + '/'
@@ -86,6 +86,8 @@ ATTRIBUTE_TO_ID = {
   'vehicle.stopped': 8}
 
 def main():
+  print(OUT_PATH)
+  print(os.path.exists(OUT_PATH))
   if not os.path.exists(OUT_PATH):
     os.mkdir(OUT_PATH)
   for split in SPLITS:

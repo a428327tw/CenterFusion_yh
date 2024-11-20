@@ -8,7 +8,9 @@ import os
 import torch
 import torch.utils.data
 from opts import opts
+
 from model.model import create_model, load_model, save_model
+
 from model.data_parallel import DataParallel
 from logger import Logger
 from dataset.dataset_factory import get_dataset
@@ -32,10 +34,12 @@ def main(opt):
   torch.backends.cudnn.benchmark = not opt.not_cuda_benchmark and not opt.eval
   Dataset = get_dataset(opt.dataset)
   opt = opts().update_dataset_info_and_set_heads(opt, Dataset)
-  print(opt)
+  #print(opt)
   if not opt.not_set_cuda_env:
     os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus_str
   opt.device = torch.device('cuda' if opt.gpus[0] >= 0 else 'cpu')
+  print(opt.gpus)
+  print(opt.device)
   logger = Logger(opt)
 
   print('Creating model...')
@@ -79,11 +83,13 @@ def main(opt):
       lr = param_group['lr']
       logger.scalar_summary('LR', lr, epoch)
       break
-    
+    print('Learning rate loded')
+
     # train one epoch
     log_dict_train, _ = trainer.train(epoch, train_loader)
     logger.write('epoch: {} |'.format(epoch))
-    
+    print('Training finished')
+
     # log train results
     for k, v in log_dict_train.items():
       logger.scalar_summary('train_{}'.format(k), v, epoch)
